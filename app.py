@@ -15,6 +15,9 @@ def get_tasks():
 @app.route('/tasks', methods=['POST'])
 def add_task():
     data = request.json
+    if "title" not in data or not data["title"].strip():
+        return jsonify({"error":"Titulo é obrigatório"}),400
+        
     tasks.append({"id": len(tasks) + 1, "title": data["title"]})
     return jsonify({"message": "Tarefa adicionada!"})
 
